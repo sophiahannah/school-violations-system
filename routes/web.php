@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Student\ViolationOverviewController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,8 +38,13 @@ Route::group(['middleware' => 'auth'], function () {
 
         // User Dashboard Page
         Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard.index');
+
+        // Violation Overview Page
+        Route::get('/violation-overview', [ViolationOverviewController::class, 'index'])->name('student.violation.overview');
     });
 
     //Logout user
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+
