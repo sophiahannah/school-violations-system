@@ -1,59 +1,218 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# School Violation System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive system for managing and tracking school violations, built with PHP and modern web technologies.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Prerequisites
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Before you begin, ensure you have the following installed on your system:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **PHP** >= 8.1
+- **Composer** (PHP dependency manager)
+- **MySQL** >= 5.7 or **MariaDB** >= 10.3
+- **Node.js** >= 16.x and **npm**
+- **Git** for version control
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Getting Started
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Step 1: Fork & Clone the Repository
 
-## Laravel Sponsors
+1. **Fork the repository** by clicking the Fork button at the top right of this page:
+   
+   [![Fork on GitHub](https://img.shields.io/badge/Fork%20me%20on-GitHub-orange?logo=github)](https://github.com/Xenrui/school-violations-system/fork)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Clone your forked repository** to your local machine:
 
-### Premium Partners
+```bash
+git clone https://github.com/Xenrui/school-violations-system.git
+cd school-violations-system
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+### Step 2: Install Dependencies
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Install both PHP and JavaScript dependencies:
 
-## Code of Conduct
+```bash
+composer install
+npm install
+npm run build
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### Step 3: Configure Environment Variables
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. **Copy the example environment file:**
+
+```bash
+cp .env.example .env
+```
+
+2. **Generate application key:**
+
+```bash
+php artisan key:generate
+```
+
+3. **Configure your database connection** in the `.env` file:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=school_violations_system
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
+```
+
+---
+
+### Step 4: Setup the Database
+
+1. **Create the database** in MySQL:
+
+```sql
+school_violations_system
+```
+
+2. **Run migrations** to create the necessary tables:
+
+```bash
+php artisan migrate
+```
+
+3. **Seed the database** with sample data:
+
+```bash
+php artisan db:seed
+```
+
+---
+
+### Step 6: Start the Development Server
+
+Launch the application using Laravel's built-in development server:
+
+```bash
+php artisan serve
+```
+
+---
+
+## Default Credentials
+
+After seeding the database, you can log in with these default credentials:
+
+- Password: `secret`
+
+---
+
+## Features
+
+- Student violation tracking and management
+- Multiple violation categories and severity levels
+- Teacher and administrator roles with different permissions
+- Violation history and reporting
+- Email notifications for serious violations
+- Student and parent portal access
+- Export violation reports to PDF/Excel
+
+---
+
+⚠️ **IMPORTANT SECURITY NOTES:**
+
+ - **NEVER** commit `.env` files to Git.
+
+---
+
+## 🤝 Contributing
+
+1.  Fork the repository
+2.  Create a feature branch (`git checkout -b feature/amazing-feature`)
+3.  Commit your changes following our commit convention (see below)
+4.  Push to the branch (`git push origin feature/amazing-feature`)
+5.  Open a Pull Request
+
+### Git Commit Convention
+
+We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification for clear and structured commit messages.
+
+#### Commit Message Format
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+#### Types
+
+- **feat**: A new feature
+    - `feat(auth): add user login functionality`
+    - `feat(cart): implement add to cart feature`
+- **fix**: A bug fix
+    - `fix(checkout): resolve payment processing error`
+    - `fix(products): correct price display formatting`
+- **docs**: Documentation only changes
+    - `docs(readme): update installation instructions`
+    - `docs(api): add endpoint documentation`
+- **style**: Changes that don't affect code meaning (formatting, missing semi-colons, etc.)
+    - `style(client): format code with prettier`
+    - `style(components): fix indentation`
+- **refactor**: Code change that neither fixes a bug nor adds a feature
+    - `refactor(api): simplify product service logic`
+    - `refactor(hooks): extract custom hook for cart`
+- **perf**: Performance improvements
+    - `perf(products): optimize product list rendering`
+    - `perf(api): add database query caching`
+- **test**: Adding or correcting tests
+    - `test(auth): add unit tests for login`
+    - `test(cart): add integration tests`
+- **build**: Changes to build system or dependencies
+    - `build(deps): upgrade react to v19`
+    - `build(client): update vite config`
+- **ci**: Changes to CI configuration files and scripts
+    - `ci(github): add deployment workflow`
+    - `ci(vercel): update build settings`
+- **chore**: Other changes that don't modify src or test files
+    - `chore(git): update .gitignore`
+    - `chore(deps): update dependencies`
+
+#### Examples
+
+```bash
+# Simple feature addition
+git commit -m "feat(products): add product search functionality"
+
+# Bug fix with details
+git commit -m "fix(cart): prevent duplicate items in cart
+
+# Documentation update
+git commit -m "docs(readme): add git commit convention section"
+```
+
+#### Best Practices
+
+1.  **Use imperative mood** in the subject line (e.g., "add" not "added" or "adds")
+2.  **Don't capitalize** the first letter of the subject
+3.  **No period** at the end of the subject line
+4.  **Limit subject line** to 50-72 characters
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+---
+
+## Acknowledgments
+
+Built with Laravel and modern web technologies to help educational institutions maintain discipline and track student behavior effectively.
