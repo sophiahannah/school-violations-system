@@ -16,4 +16,11 @@ class ViolationRecord extends Model
         'vio_sanct_id',
         'status_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    } 
+
+    
 }
