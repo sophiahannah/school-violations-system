@@ -17,16 +17,7 @@
 
     <div>
         <div>
-            Total Violations: {{ $violationRecordCount }}
-        </div>
-        <div>
-            Pending: {{ $pendingCount }}
-        </div>
-        <div>
-            Under Review: {{ $under_reviewCount }}
-        </div>
-        <div>
-            Resolved: {{ $resolvedCount }}
+          Violations Management
         </div>
         <br>
         <div>
