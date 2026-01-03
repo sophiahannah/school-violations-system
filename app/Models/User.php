@@ -52,8 +52,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-    
-    public function violationRecord()
+
+    public function violationRecords()
     {
         return $this->hasMany(ViolationRecord::class);
     }

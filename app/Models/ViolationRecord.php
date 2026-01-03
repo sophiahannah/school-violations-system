@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ViolationRecord extends Model
 {
-    use HasFactory; 
+    use HasFactory;
 
-    protected $table = 'violation_records'; 
+    protected $table = 'violation_records';
 
     protected $fillable = [
         'user_id',
@@ -20,7 +20,15 @@ class ViolationRecord extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    } 
+    }
 
-    
+    public function violationSanction()
+    {
+        return $this->belongsTo(ViolationSanction::class, 'vio_sanct_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
 }
