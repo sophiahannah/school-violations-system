@@ -42,10 +42,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         // User Dashboard Page
         Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard.index');
-
+        
         // Violation Overview Page
         Route::get('/violation-overview', [ViolationOverviewController::class, 'index'])->name('student.violation.overview');
-    });
+    }); 
 
     //Sanction (Trial)
     Route::get('sanctions', [SanctionController::class, 'index'])

@@ -11,9 +11,13 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $violationRecords = $user->violationRecords()->latest()->get();
+        $violationRecords = $user->violationRecords()
+         ->with(['status', 'violationSanction.violation', 'violationSanction.sanction'])
+         ->latest()
+         ->get();
+         
         $violationCount = $violationRecords->count();
-
+ 
         // compact data to frontend
         return view('student.dashboard', compact('user','violationCount', 'violationRecords'));
     }
