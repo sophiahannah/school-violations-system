@@ -17,6 +17,15 @@ class ViolationRecord extends Model
         'status_id',
     ];
 
+    public function canBeAppealed()
+    {
+        if ($this->appeal()->exists()) {
+            return false;
+        }
+
+        return $this->created_at->diffInDays(now()) < 3;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

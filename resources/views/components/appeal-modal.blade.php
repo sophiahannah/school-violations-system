@@ -20,7 +20,7 @@
                             <div class="col-12 col-md-6 d-flex flex-column align-items-start">
 
                                 <small class="text-muted">Violation:</small>
-                                <p class="fw-bold">{{ $violation->violationSanction->violation->violation_name }}</p>
+                                <p class="fw-bold text-start">{{ $violation->violationSanction->violation->violation_name }}</p>
                             </div>
                             <div class="col-12 col-md-6 d-flex flex-column align-items-start align-items-md-end">
 

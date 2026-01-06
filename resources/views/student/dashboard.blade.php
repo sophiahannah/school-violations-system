@@ -143,10 +143,19 @@
                                 </select>
                             </div>
                             <div class="m-4">
+                                {{-- Note --}}
+                                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                    <i class="bi bi-info-circle-fill me-2"></i>
+                                    <span class="small fw-bold">Note:</span>
+                                    <span class="small ms-2">
+                                        Appeals can no longer be available 3 days after a report is created.
+                                    </span>
+                                </div>
+
                                 {{-- Show appeal submission errors --}}
                                 @if($errors->any())
                                 @foreach($errors->all() as $error)
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <div class="alert alert-danger alert-dismissible fade show my-2" role="alert">
                                     {{ $error }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                                 </div>
@@ -156,13 +165,13 @@
                                 <table class="table table-hover align-middle mb-0">
                                     <thead class="table-light">
                                         <tr style="font-size: 13px;">
-                                            <th class="ps-4 py-3 text-muted">CASE ID</th>
-                                            <th class="py-3 text-muted">VIOLATION TYPE</th>
-                                            <th class="py-3 text-muted">DATE</th>
-                                            <th class="py-3 text-muted">RECORD</th>
-                                            <th class="py-3 text-muted">STATUS</th>
-                                            <th class="py-3 text-muted">SANCTION</th>
-                                            <th class="text-center py-3 text-muted">ACTIONS</th>
+                                            <th class="ps-4 py-3 text-muted text-nowrap">CASE ID</th>
+                                            <th class="py-3 text-muted text-nowrap">VIOLATION TYPE</th>
+                                            <th class="py-3 text-muted text-nowrap">DATE</th>
+                                            <th class="py-3 text-muted text-nowrap">RECORD</th>
+                                            <th class="py-3 text-muted text-nowrap">STATUS</th>
+                                            <th class="py-3 text-muted text-nowrap">SANCTION</th>
+                                            <th class="text-center py-3 text-muted text-nowrap">ACTIONS</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -209,14 +218,25 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="d-flex justify-content-center gap-2 align-items-center">
-                                                    <img src="/view.png" alt="appeal"
-                                                        style="width: 18px; height: 18px; cursor: pointer;"
-                                                        title="appeal">
+                                                    {{-- View Icon --}}
+                                                    {{-- <i class="bi bi-eye-fill text-black fs-4 point"
+                                                        role="button"></i> --}}
+
+                                                    @if ($record->canBeAppealed())
                                                     <button class="btn btn-sm btn-danger px-3 rounded-2 fw-bold"
                                                         style="font-size: 11px;" data-bs-toggle="modal"
                                                         data-bs-target="#appealModal-{{ $record->id }}">
                                                         APPEAL
                                                     </button>
+                                                    @endif
+
+                                                    @if($record->appeal)
+                                                    <button class="btn btn-sm btn-danger px-3 rounded-2 fw-bold"
+                                                        style="font-size: 11px;" data-bs-toggle="modal"
+                                                        data-bs-target="" disabled>
+                                                        Appeal In Progress
+                                                    </button>
+                                                    @endif
                                                 </div>
                                                 <x-appeal-modal :violation="$record" :id="'appealModal-'.$record->id" />
 
@@ -232,10 +252,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer bg-white border-0 py-3 ps-4">
-                        <small id="showingCount" class="text-muted">
+                    <div class="card-footer row bg-white border-0 py-3 ps-4">
+                        <small id="showingCount" class="text-muted col">
                             Showing {{ $violationRecords->count() }} of {{ $violationCount }} violations
                         </small>
+
                     </div>
                 </div>
             </div>

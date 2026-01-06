@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $violationRecords = $user->violationRecords()
-            ->with(['status', 'violationSanction.violation', 'violationSanction.sanction'])
+            ->with(['status', 'violationSanction.violation', 'violationSanction.sanction', 'appeal'])
             ->latest()
             ->get();
 
