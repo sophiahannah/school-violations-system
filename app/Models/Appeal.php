@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appeal extends Model
 {
-    use HasFactory; 
-    
+    use HasFactory;
+
     protected $fillable = [
         'appeal_content',
         'violation_record_id',

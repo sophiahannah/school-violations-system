@@ -16,7 +16,7 @@ class AppealFactory extends Factory
     public function definition(): array
     {
         return [
-            'appeal_content' => fake() -> paragraph(),
+            'appeal_content' => fake()->paragraph(),
             'violation_record_id' => DB::table('violation_records')->inRandomOrder()->value('id') ?? 1,
         ];
     }
