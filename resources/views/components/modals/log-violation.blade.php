@@ -6,7 +6,8 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
-                <form action="" method="POST">
+                <form action="{{ route('violations-management.store') }}" method="POST">
+                    @csrf
                     <div class="mb-3">
                         <label for="student_id" class="fw-bold">
                             Student ID / User ID
@@ -33,7 +34,7 @@
                         <label class="fw-bold">
                             Notes
                         </label>
-                        <textarea class="form-control" rows="5"></textarea>
+                        <textarea class="form-control" name="description" rows="5"></textarea>
                     </div>
                     <div class="d-flex justify-content-end gap-2 mt-4">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
