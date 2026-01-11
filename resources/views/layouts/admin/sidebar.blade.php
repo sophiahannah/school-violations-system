@@ -26,7 +26,8 @@
             </a>
 
 
-            <a href="#" class="nav-link text-white d-flex align-items-center py-2 px-4 mx-3 rounded-pill">
+            <a href="{{ route('admin.sanction') }}" class="nav-link text-white d-flex align-items-center py-2 px-4 mx-3 rounded-pill
+                 {{ request()->routeIs('admin.sanction') ? 'active bg-red fw-bold' : '' }}">
                 <i class="bi bi-award me-3 fs-5"></i> Sanctions
             </a>
         </nav>
