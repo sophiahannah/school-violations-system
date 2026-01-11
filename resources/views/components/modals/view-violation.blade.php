@@ -14,7 +14,7 @@
                             CASE ID
                         </small>
                         <div class="text-danger fw-bold fs-5" id="view_case_id">
-                            ...
+                            V-{{ date('Y') }}-{{ $record->id }}
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -22,33 +22,31 @@
                             STATUS
                         </small>
                         <div>
-                            <span class="badge" id="view_status">
-                                ...
-                            </span>
+                            <x-status-badge :status="$record->status->status_name" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <small class="text-muted fw-bold" style="font-size: 0.75rem;">
                             STUDENT ID
                         </small>
-                        <div class="fw-bold" id="view_student_id">
-                            ...
+                        <div class="fw-bold fs-5">
+                            {{ $record->user->id}}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <small class="text-muted fw-bold" style="font-size: 0.75rem;">
                             STUDENT NAME
                         </small>
-                        <div class="fw-bold" id="view_student_name">
-                            ...
+                        <div class="fw-bold fs-5">
+                            {{ $record->user->first_name.' '.$record->user->last_name}}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <small class="text-muted fw-bold" style="font-size: 0.75rem;">
                             VIOLATION TYPE
                         </small>
-                        <div id="view_violation">
-                            ...
+                        <div class="fs-5">
+                            {{ $record->violationSanction->violation->violation_name}}
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -56,7 +54,7 @@
                             DATE
                         </small>
                         <div id="view_date">
-                            ...
+                            {{ $record->violationSanction->created_at->format('M/d/Y') }}
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -64,7 +62,7 @@
                             RECORD
                         </small>
                         <div id="view_offense">
-                            ...
+                            <x-offense-badge :offense="$record->violationSanction->no_of_offense" />
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -72,7 +70,8 @@
                             SANCTION
                         </small>
                         <div id="view_sanction">
-                            ...
+                            {{ $record->violationSanction->sanction->sanction_name}}
+
                         </div>
                     </div>
                     <div class="col-12">
