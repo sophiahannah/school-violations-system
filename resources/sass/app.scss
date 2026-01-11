@@ -4,7 +4,11 @@ $primary: #800000;
 
 $custom-colors: (
     "dark-tertiary": #e9e9e9,
-    "red": #9A2A2A    
+    "red": #9a2a2a,
+    "red-shade": #ffd7d7,
+    "yellow-shade": #fff1c9,
+    "blue-shade": #e6f7f9,
+    "green-shade": #e8f5e9,
 );
 
 $theme-colors: (
@@ -27,7 +31,7 @@ input:focus,
 textarea:focus,
 select:focus,
 .form-control:focus {
-  outline: none; 
-  box-shadow: none ;
-  border-color: inherit ;
+    outline: none;
+    box-shadow: none;
+    border-color: inherit;
 }
