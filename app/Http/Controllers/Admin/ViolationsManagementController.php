@@ -35,7 +35,7 @@ class ViolationsManagementController extends Controller
         $vio_sanct_id = $this->determineViolationSanction($violation_id, $violation_count);
         $result = $this->insertNewViolation($user_id, $vio_sanct_id);
 
-        return view('admin.test', compact('user_id', 'violation_records', 'violation_id', 'violation_count', 'vio_sanct_id', 'result')); // Used this for testing lang, edit or delete this as needed;
+        return view('admin.test', compact('user_id', 'violation_records', 'violation_id', 'violation_count', 'vio_sanct_id', 'result'));        
     }
 
     private function getUserId($student_id) {

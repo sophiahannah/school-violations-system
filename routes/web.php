@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Violations Management Page
         Route::get('/violations-management', [AdminViolationsManagementController::class, 'index'])->name('admin.violations-management.index');
 
+<<<<<<< HEAD
         //Sanction Page
         Route::get('/sanction', [SanctionController::class, 'index'])->name('admin.sanction');
 
@@ -46,6 +47,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         //Violation Resource (in case of refactor)
         Route::resource('/violations-management', ViolationController::class);
+=======
+        // TEST ROUTE: logging violations of students
+        Route::get('/test', [AdminViolationsManagementController::class, 'logViolation'])->name('admin.violations-management.logViolation');
+>>>>>>> 75cf34ba951bd8a5fd68adfaa9e4e10cf5c19a18
     });
 
     // Student Routes
