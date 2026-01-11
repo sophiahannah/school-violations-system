@@ -21,7 +21,7 @@
             </a>
 
             <a href="{{ route('violations-management.index') }}" class="nav-link text-white  d-flex align-items-center py-2 px-4 mx-3 rounded-pill
-                 {{ request()->routeIs('admin.violations-management.index') ? 'active bg-red fw-bold' : '' }}">
+                 {{ request()->routeIs('violations-management.index') ? 'active bg-red fw-bold' : '' }}">
                 <i class="bi bi-file-text me-3 fs-5"></i> Violations
             </a>
 

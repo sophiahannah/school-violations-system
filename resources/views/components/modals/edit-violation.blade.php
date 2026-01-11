@@ -1,8 +1,8 @@
 <div class="modal fade" id="{{ $id }}" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content border-0">
-            <div class="modal-header modal-header-yellow">
-                <h5 class="modal-title fw-bold">Edit Record</h5>
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title fw-bold text-white">Edit Record</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">

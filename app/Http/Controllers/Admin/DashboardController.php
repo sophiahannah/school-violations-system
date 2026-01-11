@@ -5,42 +5,54 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Status;
 use App\Models\Violation;
-use Illuminate\Http\Request;
 use App\Models\ViolationRecord;
+use App\Models\Appeal;
+use Illuminate\Http\Request;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $violations = Violation::all();
+        // Summary counts
+        $summary = [
+            'total_violations' => ViolationRecord::count(),
+            'under_review' => ViolationRecord::where('status_id', 1)->count(),
+            'pending' => ViolationRecord::where('status_id', 2)->count(),
+            'resolved' => ViolationRecord::where('status_id', 3)->count(),
+        ];
 
-        $violationRecords = ViolationRecord
-            ::with(['status', 'user', 'violationSanction.violation', 'violationSanction.sanction', 'appeal'])
+        $recentViolations = ViolationRecord::with(['user', 'status', 'violationSanction.violation'])
             ->latest()
-            ->paginate(10);
+            ->take(5)
+            ->get();
 
-        $violationRecordCount = ViolationRecord::all()->count();
+        $recentAppeals = Appeal::with(['violationRecord.user', 'violationRecord.violationSanction.violation'])
+            ->latest('updated_at')
+            ->take(4)
+            ->get();
 
-        $under_reviewCount = ViolationRecord::where('status_id', 1)->count();
+        $chartOptions = [
+            'chart_title' => 'Violations in past 7 Days',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\ViolationRecord',
+            'group_by_field' => 'created_at',
+            'chart_type' => 'bar',
+            'chart_color' => '255, 215, 215',
+            'group_by_period' => 'day',
+            'aggregate_function' => 'count',
+            'filter_field' => 'created_at',
+            'filter_days' => 7,
+        ];
 
-        $pendingCount = ViolationRecord::where('status_id', 2)->count();
+        $violationsChart = new LaravelChart($chartOptions);
 
-        $resolvedCount = ViolationRecord::where('status_id', 3)->count();
-
-        $statuses = Status::all();
-
-        // return response()->json($violationRecords);
-        return view(
-            'admin.dashboard',
-            compact(
-                'violations',
-                'violationRecords',
-                'violationRecordCount',
-                'under_reviewCount',
-                'pendingCount',
-                'resolvedCount',
-                'statuses'
-            )
-        );
+        return view('admin.dashboard', compact(
+            'summary',
+            'recentViolations',
+            'recentAppeals',
+            'violationsChart'
+        ));
     }
 }

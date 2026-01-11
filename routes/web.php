@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
 
         // Violations Management Page
-        Route::get('/violations-management', [AdminViolationsManagementController::class, 'index'])->name('admin.violations-management.index');
+        // Route::get('/violations-management', [AdminViolationsManagementController::class, 'index'])->name('admin.violations-management.index');
 
         //Sanction Page
         Route::get('/sanction', [SanctionController::class, 'index'])->name('admin.sanction');

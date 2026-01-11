@@ -1,8 +1,8 @@
 <div class="modal fade" id="logViolationModal" tabindex="-1">
     <div class="modal-dialog modal-xl">
         <div class="modal-content border-0">
-            <div class="modal-header modal-header">
-                <h5 class="modal-title fw-bold">Log New Violation</h5>
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title fw-bold text-white">Log New Violation</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
