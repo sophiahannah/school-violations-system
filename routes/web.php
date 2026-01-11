@@ -41,8 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
         //Sanction Page
         Route::get('/sanction', [SanctionController::class, 'index'])->name('admin.sanction');
 
-        //Post - Log Violation
-        // Route::get('/violation', [ViolationController::class, ''])
+        //Violation Resource (in case of refactor)
+        Route::resource('/violations-management', ViolationController::class);
     });
 
     // Student Routes

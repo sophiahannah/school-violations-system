@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ViolationRecord;
 use Illuminate\Http\Request;
 
 class ViolationController extends Controller
@@ -12,23 +13,19 @@ class ViolationController extends Controller
      */
     public function index()
     {
-        //
+        $violationRecords = ViolationRecord::all();
+
+        $violationRecordCount = ViolationRecord::all()->count();
+
+        return view('admin.violations-management', compact('violationRecords'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a newly created violation in storage.
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -40,19 +37,11 @@ class ViolationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update the specified violation in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        
     }
 
     /**
@@ -60,6 +49,6 @@ class ViolationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
     }
 }
