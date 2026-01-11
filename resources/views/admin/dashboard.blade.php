@@ -58,12 +58,21 @@
                     <tbody id="violationTableBody">
                         @forelse($violationRecords as $record)
                         <tr>
-                            <td class="fw-bold text-danger text-nowrap">V-{{ date('Y') }}-{{ $record->id }}</td>
-                            <td class="text-nowrap text-center">{{ $record->user->id}}</td>
-                            <td class="text-nowrap" class="fw-bold">{{ $record->user->first_name.'
-                                '.$record->user->last_name}}</td>
-                            <td class="">{{ $record->violationSanction->violation->violation_name}}</td>
-                            <td class="text-nowrap">{{ $record->created_at->format('Y-m-d') }}</td>
+                            <td class="fw-bold text-danger text-nowrap">
+                                V-{{ date('Y') }}-{{ $record->id }}
+                            </td>
+                            <td class="text-nowrap text-center">
+                                {{ $record->user->id}}
+                            </td>
+                            <td class="text-nowrap" class="fw-bold">
+                                {{ $record->user->first_name.' '.$record->user->last_name}}
+                            </td>
+                            <td class="">
+                                {{ $record->violationSanction->violation->violation_name}}
+                            </td>
+                            <td class="text-nowrap">
+                                {{ $record->created_at->format('Y-m-d') }}
+                            </td>
                             <td>
                                 <x-offense-badge :offense="$record->violationSanction->no_of_offense" />
                             </td>
@@ -75,19 +84,10 @@
                             {{-- <td>{{ $record->violationSanction->sanction->name ?? 'N/A' }}</td> --}}
 
                             <td class="text-center text-nowrap">
-                                <button class="btn-action-view" onclick="viewCase(this)"
-                                    data-id="V-{{ date('Y') }}-{{ $record->id }}"
-                                    data-student-id="{{ $record->user->student_number ?? 'N/A' }}"
-                                    data-student-name="{{ $record->user->name ?? 'Unknown' }}"
-                                    data-violation="{{ $record->violationSanction->violation->name ?? 'N/A' }}"
-                                    data-date="{{ $record->created_at->format('Y-m-d') }}"
-                                    data-offense="{{ $record->violationSanction->offense_level ?? 'N/A' }}"
-                                    data-status="{{ $record->status->name ?? 'Unknown' }}"
-                                    data-sanction="{{ $record->violationSanction->sanction->name ?? 'N/A' }}"
-                                    data-description="{{ $record->description ?? 'No specific description provided.' }}">
+                                <button class="btn-action-view" data-bs-toggle="modal"
+                                    data-bs-target="#viewViolationModal-{{ $record->id }}">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
-
                                 <button class="btn-action-edit" onclick="editCase('{{ $record->id }}')">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
@@ -95,6 +95,7 @@
                                     <i class="bi bi-trash text-red"></i>
                                 </button>
                             </td>
+                            <x-modals.view-violation :record="$record" :id="'viewViolationModal-'.$record->id" />
                         </tr>
                         @empty
                         <tr>
