@@ -21,8 +21,7 @@ class ViolationController extends Controller
         $violations = Violation::all();
 
         $violationRecords = ViolationRecord::with(['status', 'user', 'violationSanction.violation', 'violationSanction.sanction', 'appeal'])
-            ->latest()
-            ->paginate(10);
+            ->latest();
 
         $violationRecordCount = ViolationRecord::all()->count();
 
@@ -33,6 +32,14 @@ class ViolationController extends Controller
         $resolvedCount = ViolationRecord::where('status_id', 3)->count();
 
         $statuses = Status::all();
+
+        $statusId = request('status');
+
+        if ($statusId && $statusId !== 'all') {
+            $violationRecords = $violationRecords->where('status_id', $statusId);
+        }
+
+        $violationRecords = $violationRecords->paginate(10);
 
         // return response()->json($violationRecords);
         return view(
