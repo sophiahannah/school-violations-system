@@ -10,7 +10,7 @@
                     delete record <span class="text-primary fw-bold"> V-{{ date('Y') }}-{{ $record->id }}</span>? </p>
                 <input type="hidden" id="delete_id_storage">
             </div>
-            <form action="{{ route('violations-management.destroy', $record)}}" method="POST"> @csrf @method('DELETE')
+            <form action="{{ route('admin.violations-management.destroy', $record)}}" method="POST"> @csrf @method('DELETE')
                 <div class="modal-footer justify-content-center border-0 pt-0 pb-4"> <button type="button"
                         class="btn btn-light px-4" data-bs-dismiss="modal"> Cancel </button> <button type="submit"
                         class="btn btn-danger px-4" id="confirmDeleteBtn"> <i class="bi bi-trash me-1"></i> Delete

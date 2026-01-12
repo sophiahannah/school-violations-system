@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <form action="{{ route('violations-management.index') }}" method="get">
+                    <form action="{{ route('admin.violations-management.index') }}" method="get">
                         <select class="form-select" name="status" onchange="this.form.submit()">
 
                             <option value="all">All status</option>

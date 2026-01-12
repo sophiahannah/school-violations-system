@@ -68,7 +68,7 @@ class ViolationController extends Controller
         $vio_sanct_id = $this->determineViolationSanction($violation_id, $violation_count);
         $result = $this->insertNewViolation($user_id, $vio_sanct_id);
 
-        return redirect()->route('violations-management.index');
+        return redirect()->route('admin.violations-management.index');
     }
 
     private function getUserId($student_id)
@@ -154,6 +154,6 @@ class ViolationController extends Controller
     {
         $violations_management->delete();
 
-        return redirect()->route('violations-management.index');
+        return redirect()->route('admin.violations-management.index');
     }
 }

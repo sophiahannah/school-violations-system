@@ -30,16 +30,15 @@ Route::group(['middleware' => 'guest'], function () {
 Route::group(['middleware' => 'auth'], function () {
 
     // Admin / Faculty Routes
-    Route::group(['middleware' => 'Role:faculty', 'prefix' => 'admin'], function () {
+    Route::group(['middleware' => 'Role:faculty', 'prefix' => 'admin', 'as' => 'admin.'], function () {
 
         // Dashboard Page
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
 
         //Sanction Page
-        Route::get('/sanction', [SanctionController::class, 'index'])->name('admin.sanction');
+        Route::get('/sanction', [SanctionController::class, 'index'])->name('sanction');
 
         // Posting violation
-        Route::post('/log-violation', [ViolationController::class, 'store'])->name('admin.violations-management.logViolation');
 
         //Violation Resource
         Route::resource('/violations-management', ViolationController::class);
