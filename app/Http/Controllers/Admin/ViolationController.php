@@ -16,30 +16,38 @@ class ViolationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $violations = Violation::all();
 
-        $violationRecords = ViolationRecord::with(['status', 'user', 'violationSanction.violation', 'violationSanction.sanction', 'appeal'])
-            ->latest();
+        // Get search input
+        $search = $request->input('search');
+        $statusId = $request->input('status');
 
-        $violationRecordCount = ViolationRecord::all()->count();
+        $violationRecords = ViolationRecord::with(['status', 'user', 'violationSanction.violation', 'violationSanction.sanction', 'appeal']);
 
+        if ($search) {
+            $violationRecords->whereHas('user', function ($q) use ($search) {
+                $q->where('school_id', 'like', "%{$search}%")
+                    ->orWhere('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%")
+                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) like ?", ["%{$search}%"]);
+            });
+        }
+
+        // Apply status filter
+        if ($statusId && $statusId !== 'all') {
+            $violationRecords->where('status_id', $statusId);
+        }
+
+        $violationRecordCount = (clone $violationRecords)->count();
         $under_reviewCount = ViolationRecord::where('status_id', 1)->count();
-
         $pendingCount = ViolationRecord::where('status_id', 2)->count();
-
         $resolvedCount = ViolationRecord::where('status_id', 3)->count();
 
         $statuses = Status::all();
 
-        $statusId = request('status');
-
-        if ($statusId && $statusId !== 'all') {
-            $violationRecords = $violationRecords->where('status_id', $statusId);
-        }
-
-        $violationRecords = $violationRecords->paginate(10);
+        $violationRecords = $violationRecords->latest()->paginate(10)->withQueryString();
 
         // return response()->json($violationRecords);
         return view(
