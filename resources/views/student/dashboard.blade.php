@@ -5,38 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Portal | Violation Dashboard</title>
-    <link rel="icon" type="image/png" href="PUPLogo 1 Login.png">
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{ asset('PUPLogo 1 Login.png') }}">
     
-    <style>
-        .table-responsive::-webkit-scrollbar {
-            height: 8px;
-        }
-        .table-responsive::-webkit-scrollbar-thumb {
-            background-color: #b22222;
-            border-radius: 4px;
-        }
-        .table-responsive::-webkit-scrollbar-track {
-            background-color: #e9ecef;
-        }
-        .btn-dark:hover {
-            background-color: #424649;
-            border-color: #373b3e;
-        }
-    </style>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body class="bg-light" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
 
-    <nav class="navbar navbar-dark mb-4 shadow-sm"
-        style="background-color: #ffffff; border-bottom: 6px solid #b22222;">
+    <nav class="navbar navbar-dark mb-4 shadow-sm navbar-pup">
         
         <div class="container-fluid px-3 px-lg-4 d-flex justify-content-between align-items-center">
             
             <span class="navbar-brand mb-0 h1 d-flex align-items-center fw-bold" style="color: #b22222;">
-                <img src="/student.png" alt="StudentLogo" class="me-2" style="width: 30px;">
+                <img src="{{ asset('student.png') }}" alt="StudentLogo" class="me-2" style="width: 30px;">
                 <span class="d-none d-sm-inline">Student Portal</span> 
                 <span class="d-inline d-sm-none">Portal</span>
             </span>
@@ -44,7 +26,7 @@
             <form action="{{ route('logout') }}" method="POST" class="d-flex m-0">
                 @csrf
                 <button type="submit" class="btn btn-dark btn-sm px-3 fw-bold d-flex align-items-center gap-2">
-                    <i class="fa-solid fa-right-from-bracket"></i> 
+                    <i class="bi bi-box-arrow-right"></i> 
                     <span>Sign Out</span>
                 </button>
             </form>
@@ -61,8 +43,9 @@
             <div class="col-12 col-lg-4 col-xl-3">
                 
                 <div class="card mb-4 shadow-sm border-0 rounded-3">
-                    <div class="card-header border-0 text-white fw-bold py-3 text-center"
-                        style="background-color: #800000;">Student Profile</div>
+                    <div class="card-header border-0 text-white fw-bold py-3 text-center bg-primary">
+                        Student Profile
+                    </div>
                     <div class="card-body text-center py-4">
                         <img src="https://ui-avatars.com/api/?name={{ $user->first_name }}&background=800000&color=fff"
                             class="mb-3 shadow-sm border-3 border-light rounded-circle"
@@ -79,13 +62,13 @@
                 </div>
 
                 <div class="card mb-4 shadow-sm border-0 rounded-3">
-                    <div class="card-header border-0 text-white fw-bold py-3" style="background-color: #800000;">
+                    <div class="card-header border-0 text-white fw-bold py-3 bg-primary">
                         Quick Stats
                     </div>
                     <ul class="list-group list-group-flush rounded-3">
                         <li class="list-group-item d-flex justify-content-between align-items-center m-1 border-0">
                             <span class="d-flex align-items-center">
-                                <img src="/violation.png" alt="icon" class="me-2" style="width: 18px; height: 18px;">
+                                <img src="{{ asset('violation.png') }}" alt="icon" class="me-2" style="width: 18px; height: 18px;">
                                 Total Violations
                             </span>
                             <span class="badge bg-danger rounded-pill px-3">{{ $violationCount }}</span>
@@ -94,7 +77,7 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center m-1 border-0"
                             style="background-color: #fff9e6;">
                             <span class="fw-bold d-flex align-items-center" style="color: #2c3e50;">
-                                <img src="/pending.png" alt="icon" class="me-2" style="width: 18px; height: 18px;">
+                                <img src="{{ asset('pending.png') }}" alt="icon" class="me-2" style="width: 18px; height: 18px;">
                                 Pending
                             </span>
                             <span class="fw-bold" style="color: #f1c40f; font-size: 18px;">
@@ -105,7 +88,7 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center m-1 border-0"
                             style="background-color: #e6ffed;">
                             <span class="fw-bold d-flex align-items-center" style="color: #2c3e50;">
-                                <img src="/done.png" alt="icon" class="me-2" style="width: 18px; height: 18px;">
+                                <img src="{{ asset('done.png') }}" alt="icon" class="me-2" style="width: 18px; height: 18px;">
                                 Resolved
                             </span>
                             <span class="fw-bold" style="color: #2ecc71; font-size: 18px;">
@@ -116,7 +99,7 @@
                 </div>
 
                 <div class="card mb-4 shadow-sm border-0 rounded-3">
-                    <div class="card-header border-0 text-white fw-bold py-3" style="background-color: #800000;">
+                    <div class="card-header border-0 text-white fw-bold py-3 bg-primary">
                         Recent Violations
                     </div>
                     <div class="card-body p-2">
@@ -130,7 +113,7 @@
                             </div>
                             <div class="mt-1">
                                 <small class="text-muted" style="font-size: 10px;">
-                                    <i class="far fa-calendar-alt me-1"></i>
+                                    <i class="bi bi-calendar-event me-1"></i>
                                     {{ \Carbon\Carbon::parse($record->created_at)->format('Y-m-d') }}
                                 </small>
                             </div>
@@ -145,7 +128,7 @@
 
             <div class="col-12 col-lg-8 col-xl-9">
                 <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-header border-0 text-white fw-bold py-3" style="background-color: #800000;">
+                    <div class="card-header border-0 text-white fw-bold py-3 bg-primary">
                         Violation History
                     </div>
                     
@@ -153,7 +136,7 @@
                         <div class="p-3 border-bottom bg-light">
                             <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2">
                                 <div class="d-flex align-items-center text-muted mb-2 mb-sm-0">
-                                    <i class="fas fa-filter me-2" style="font-size: 0.9rem;"></i>
+                                    <i class="bi bi-funnel-fill me-2"></i>
                                     <span class="small me-2">Filter by:</span>
                                     <form action="{{ route('student.dashboard.index') }}" method="get" class="d-inline-block">
                                         <select class="form-select form-select-sm border-secondary-subtle rounded-3"
@@ -266,7 +249,5 @@
             </div>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

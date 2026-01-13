@@ -35,3 +35,22 @@ select:focus,
     box-shadow: none;
     border-color: inherit;
 }
+
+
+// Custom Scrollbar for Tables
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: $primary; 
+    border-radius: 4px;
+}
+.table-responsive::-webkit-scrollbar-track {
+    background-color: #e9ecef;
+}
+
+// Custom Navbar Style 
+.navbar-pup {
+    background-color: #ffffff;
+    border-bottom: 6px solid #b22222; 
+}
