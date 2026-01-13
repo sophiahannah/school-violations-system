@@ -75,6 +75,10 @@ class ViolationController extends Controller
         $vio_sanct_id = $this->determineViolationSanction($violation_id, $violation_count);
         $result = $this->insertNewViolation($user_id, $vio_sanct_id);
 
+        if ($result == 0) {
+            return "Error:  Action failed.";
+        }
+
         return redirect()->route('admin.violations-management.index');
     }
 
@@ -146,19 +150,51 @@ class ViolationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        dd('This is the SHOW controller.  Add @method to your form');
     }
 
     /**
      * Update the specified violation in storage.
      */
-    public function update(Request $request, string $id) {}
+    public function update(ViolationRecord $violations_management, Request $request) {
+    
+        $violation_id = request('violation_id');    
+
+        if ($violation_id == null) {
+            return "Error:  Violation cannot be null.";
+        }
+
+        $user_id = $violations_management->user->id;
+        $prev_vio_sanct_id = $violations_management->vio_sanct_id;
+        $prev_violation_id = ViolationSanction::where('id', $prev_vio_sanct_id)->get('violation_id')->first()->violation_id;
+
+        // If the current record's violation_id and newly-entered violation_id are the same, do nothing.
+        if (strcmp($violation_id, $prev_violation_id) == 0) {
+            return redirect()->route('admin.violations-management.index');
+        } 
+
+        // If the current record's violation_id and newly-entered violation_id are different
+        $violation_count = $this->countViolationOfStudent($user_id, $violation_id);
+        $vio_sanct_id = $this->determineViolationSanction($violation_id, $violation_count);
+
+        $result = $violations_management->update([
+            'vio_sanct_id' => $vio_sanct_id,
+            'status_id' => 1,
+            'updated_at'=> Carbon::now(),
+        ]);
+
+        if ($result == 0) {
+            return "Error: Action failed";
+        }
+    
+        return redirect()->route('admin.violations-management.index');
+    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(ViolationRecord $violations_management)
-    {
+    {   
         $violations_management->delete();
 
         return redirect()->route('admin.violations-management.index');
