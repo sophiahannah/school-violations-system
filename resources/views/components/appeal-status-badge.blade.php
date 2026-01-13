@@ -1,15 +1,15 @@
 <div class="d-flex justify-content-center gap-2 align-items-center">
     @if(!$record->canBeAppealed())
     @if($record->appeal?->is_accepted === true)
-    <span class="badge bg-green-shade text-uppercase text-black " style="font-size: 12px;">
+    <span class="badge text-uppercase" style="font-size: 12px; background-color: #99e1b3; color: #16863f;">
         Accepted
     </span>
     @elseif($record->appeal?->is_accepted === false)
-    <span class="badge bg-red-shade text-uppercase text-black " style="font-size: 12px;">
+    <span class="badge text-uppercase" style="font-size: 12px; background-color: #fbd6d6; color: #a12b2b;">
         Rejected
     </span>
     @else
-    <span class="badge bg-blue-shade text-uppercase text-black " style="font-size: 12px;">
+    <span class="badge text-uppercase" style="font-size: 12px; background-color: #e2eefa; color: #4f5e6f;">
         Appeal In Progress
     </span>
     @endif
