@@ -11,14 +11,23 @@ class AppealController extends Controller
     /* Display a list of all appeals */
     public function index()
     {
-        // Fetch all appeals with relationships
-        $appeals = Appeal::with([
+        $query = Appeal::with([
             'violationRecord.user',
             'violationRecord.violationSanction.violation',
             'violationRecord.violationSanction.sanction',
-        ])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        ]);
+
+        // Search functionality
+        if (request('search')) {
+            $search = request('search');
+            $query->whereHas('violationRecord.user', function ($q) use ($search) {
+                $q->where('school_id', 'like', "%{$search}%")
+                    ->orWhere('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%");
+            })->orWhere('id', 'like', "%{$search}%"); // Search by case ID
+        }
+
+        $appeals = $query->orderBy('created_at', 'desc')->paginate(10);
 
         // Calculate summary based on is_accepted column
         $summary = [

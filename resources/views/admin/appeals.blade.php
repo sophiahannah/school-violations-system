@@ -66,14 +66,28 @@
     {{-- Search Bar --}}
     <div class="card border-0 mb-4">
         <div class="card-body shadow-sm">
-            <div class="input-group">
-                <span class="input-group-text bg-white border-end-0">
-                    <i class="bi bi-search text-muted"></i>
-                </span>
-                <input type="text" class="form-control border-start-0" 
-                       placeholder="Search by student name, ID, or case ID..." 
-                       id="searchInput">
-            </div>
+            <form method="GET" action="{{ route('admin.appeals.index') }}" id="searchForm">
+                <div class="position-relative">
+                    <span class="position-absolute top-50 translate-middle-y ms-3" style="z-index: 10;">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" 
+                           class="form-control ps-5 {{ request('search') ? 'pe-5' : '' }}" 
+                           placeholder="Search by student name, ID, or case ID..." 
+                           name="search"
+                           id="searchInput"
+                           value="{{ request('search') }}"
+                           style="height: 45px;">
+                    @if(request('search'))
+                        <button type="button" 
+                                class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-0 border-0 bg-transparent" 
+                                id="clearSearch"
+                                style="width: 30px; height: 30px; z-index: 10;">
+                            <i class="bi bi-x-circle-fill text-muted"></i>
+                        </button>
+                    @endif
+                </div>
+            </form>
         </div>
     </div>
 
@@ -105,4 +119,6 @@
     @endif
 
 </div>
+
+@vite(['resources/js/appeal-search.js'])
 @endsection
