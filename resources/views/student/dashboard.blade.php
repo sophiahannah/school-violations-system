@@ -183,27 +183,19 @@
                                             <td class="small">{{ $record->violationSanction->sanction->sanction_name }}
                                             </td>
                                             <td class="text-center">
-                                                <div class="d-flex justify-content-center gap-2 align-items-center">
-                                                    @if ($record->canBeAppealed())
-                                                    <button class="btn btn-sm btn-danger px-3 rounded-2 fw-bold"
-                                                        style="font-size: 11px;" data-bs-toggle="modal"
-                                                        data-bs-target="#appealModal-{{ $record->id }}">
-                                                        APPEAL
-                                                    </button>
-                                                    @endif
-
-                                                    @if($record->appeal)
-                                                    <button class="btn btn-sm btn-danger px-3 rounded-2 fw-bold"
-                                                        style="font-size: 11px;" data-bs-toggle="modal"
-                                                        data-bs-target="" disabled>
-                                                        Appeal In Progress
-                                                    </button>
-                                                    @endif
-                                                </div>
-                                                <x-modals.request-appeal :violation="$record" :id="'appealModal-'.$record->id" />
-
+                                                @if ($record->canBeAppealed())
+                                                <button class="btn btn-sm btn-danger px-3 rounded-2 fw-bold"
+                                                    style="font-size: 11px;" data-bs-toggle="modal"
+                                                    data-bs-target="#appealModal-{{ $record->id }}">
+                                                    APPEAL
+                                                </button>
+                                                @endif
+                                                
+                                                <x-appeal-status-badge :record="$record" />
                                             </td>
                                         </tr>
+                                        <x-modals.request-appeal :violation="$record"
+                                            :id="'appealModal-'.$record->id" />
                                         @empty
                                         <tr>
                                             <td colspan="8" class="text-center py-5 text-muted">No records found.</td>

@@ -29,7 +29,6 @@ class DashboardController extends Controller
         if ($statusId && $statusId !== 'all') {
             $violationRecords = $violationRecords->where('status_id', $statusId);
         }
-
         // return response()->json($violationRecords);
         // compact data to frontend
         return view('student.dashboard', compact('user', 'violationCount', 'violationRecords', 'statuses'));
