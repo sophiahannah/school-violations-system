@@ -21,7 +21,7 @@ class AppealFactory extends Factory
             ->inRandomOrder()
             ->first();
 
-        $violationId = $violation?->id ?? ViolationRecord::inRandomOrder()->value('id');
+        $violationId = $violation->id ?? ViolationRecord::inRandomOrder()->value('id');
 
         return [
             'appeal_content' => fake()->paragraph(),

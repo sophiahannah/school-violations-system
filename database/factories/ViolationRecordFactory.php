@@ -18,8 +18,8 @@ class ViolationRecordFactory extends Factory
     {
         return [
             'user_id' => User::where('role_id', 1)->inRandomOrder()->value('id'),
-            'vio_sanct_id' => DB::table('violation_sanctions')->inRandomOrder()->value('id') ?? 1,
-            'status_id' => DB::table('status')->inRandomOrder()->value('id') ?? 1,
+            'vio_sanct_id' => DB::table('violation_sanctions')->where('no_of_offense', 1)->inRandomOrder()->value('id') ?? 1,
+            'status_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ];
