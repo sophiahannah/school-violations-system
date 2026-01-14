@@ -165,7 +165,9 @@
                                 <i class="bi bi-info-circle-fill me-2 mt-1"></i>
                                 <div>
                                     <span class="small fw-bold">Note:</span>
-                                    <span class="small">Appeals unavailable 3 days after report creation.</span>
+                                    <span class="small">
+                                        Appeals can no longer be available 3 days after a report is created.
+                                    </span>
                                 </div>
                             </div>
 
@@ -228,7 +230,9 @@
                                             </button>
                                             @endif
 
+                                            @if($record->appeal !== null)
                                             <x-appeal-status-badge :record="$record" />
+                                            @endif
                                         </td>
                                     </tr>
                                     <x-modals.request-appeal :violation="$record" :id="'appealModal-'.$record->id" />
