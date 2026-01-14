@@ -98,15 +98,25 @@
                             </td>
 
                             <td class="text-center text-nowrap">
-                                <button class="btn-action-view" data-bs-toggle="modal"
+                                <button class="border-0 bg-transparent p-2 me-1"
+                                    data-bs-toggle="modal"
                                     data-bs-target="#editViolationModal-{{ $record->id }}"
-                                    onclick="event.stopPropagation()">
-                                    <i class="bi bi-pencil-square"></i>
+                                    onclick="event.stopPropagation()"
+                                    title="Edit violation"
+                                    style="cursor: pointer; transition: all 0.3s ease; border-radius: 0.5rem;"
+                                    onmouseover="this.style.backgroundColor='rgba(13, 110, 253, 0.1)'; this.style.transform='translateY(-2px)'"
+                                    onmouseout="this.style.backgroundColor='transparent'; this.style.transform='translateY(0)'">
+                                    <i class="bi bi-pencil-square" style="font-size: 1.1rem; color: #0c0429;"></i>
                                 </button>
-                                <button class="btn-action-delete" data-bs-toggle="modal"
+                                <button class="border-0 bg-transparent p-2 ms-1 me-1"
+                                    data-bs-toggle="modal"
                                     data-bs-target="#deleteViolationModal-{{ $record->id }}"
-                                    onclick="event.stopPropagation()">
-                                    <i class="bi bi-trash text-red"></i>
+                                    onclick="event.stopPropagation()"
+                                    title="Delete violation"
+                                    style="cursor: pointer; transition: all 0.3s ease; border-radius: 0.5rem;"
+                                    onmouseover="this.style.backgroundColor='rgba(220, 53, 69, 0.1)'; this.style.transform='translateY(-2px)'"
+                                    onmouseout="this.style.backgroundColor='transparent'; this.style.transform='translateY(0)'">
+                                    <i class="bi bi-trash" style="font-size: 1.1rem; color: #dc3545;"></i>
                                 </button>
                             </td>
                         </tr>
