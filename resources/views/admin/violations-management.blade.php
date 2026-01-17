@@ -4,6 +4,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="card border-0 shadow-sm">
+        {{-- Log Violation --}}
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="fw-bold mb-0">Violation Logs</h5>
             <button class="btn text-white" style="background-color: #800000;" data-bs-toggle="modal"
@@ -11,10 +12,10 @@
                 <i class="fas fa-plus me-1"></i>
                 Log Violation
             </button>
-            <x-modals.log-violation :violations="$violations" />
         </div>
         <div class="card-body">
             <div class="row mb-3 g-2">
+                {{-- Search --}}
                 <div class="col-md-8">
                     <form action="{{ route('admin.violations-management.index') }}" method="get" id="searchForm">
                         <div class="input-group">
@@ -32,6 +33,8 @@
                         <input type="hidden" name="status" value="{{ request('status') }}">
                     </form>
                 </div>
+
+                {{-- Filter --}}
                 <div class="col-md-4">
                     <form action="{{ route('admin.violations-management.index') }}" method="get">
                         <input type="hidden" name="search" value="{{ request('search') }}">
@@ -47,12 +50,12 @@
                 </div>
             </div>
 
+            {{-- Display for md screens and above --}}
             <div class="d-none d-md-block table-responsive">
                 <table class="table table-hover table-striped align-middle">
                     <thead class="table-light">
                         <tr class="text-nowrap">
                             <th>Case ID</th>
-                            {{-- <th class="text-center">Student ID</th> --}}
                             <th class="">Student Name</th>
                             <th class="">Violation Type</th>
                             <th class="d-none d-lg-block">Date</th>
@@ -67,9 +70,6 @@
                             <td class="text-nowrap fw-bold text-danger">
                                 {{ $record->formatCaseId() }}
                             </td>
-                            {{-- <td class="fw-bold text-nowrap text-center">
-                                {{ $record->user->school_id}}
-                            </td> --}}
                             <td class="text-nowrap pe-3">
                                 <span
                                     class="d-flex justify-content-between align-items-center gap-1 fs-5 fw-bold text-primary">
@@ -116,11 +116,6 @@
                                 </button>
                             </td>
                         </tr>
-
-                        <x-modals.view-violation :record="$record" :id="'viewViolationModal-'.$record->id" />
-                        <x-modals.edit-violation :record="$record" :id="'editViolationModal-'.$record->id"
-                            :violations="$violations" />
-                        <x-modals.delete-violation :id="'deleteViolationModal-'.$record->id" :record="$record" />
                         @empty
                         <tr>
                             <td colspan="8" class="text-center text-muted py-4">No violation records found.</td>
@@ -130,14 +125,13 @@
                 </table>
             </div>
 
+            {{-- Display for screens smaller than md --}}
             <div class="d-flex d-md-none">
                 <div class="row row-cols-1 row-cols-sm-2 g-3">
                     @forelse ($violationRecords as $record)
                     <div class="col">
                         <x-violation-card :record="$record" />
-
                     </div>
-                    <x-modals.view-violation :record="$record" :id="'viewViolationModal-'.$record->id" />
                     @empty
                     <div class="col">
                         <span>No Records Found</span>
@@ -146,6 +140,7 @@
                 </div>
             </div>
 
+            {{-- Pagination Links --}}
             <div class="d-flex flex-column justify-content-end align-items-end mx-3">
                 <small class="text-muted" id="rowCounter">Showing {{ $violationRecordCount }} violations</small>
                 <span class="">{{ $violationRecords->links() }}</span>
@@ -154,5 +149,14 @@
     </div>
 </div>
 
+{{-- Create Modal Component Per Record - View, Edit, Delete--}}
+@foreach ($violationRecords as $record)
+<x-modals.view-violation :record="$record" :id="'viewViolationModal-'.$record->id" />
+<x-modals.edit-violation :record="$record" :id="'editViolationModal-'.$record->id" :violations="$violations" />
+<x-modals.delete-violation :id="'deleteViolationModal-'.$record->id" :record="$record" />
+@endforeach
+
+{{-- Log Violation Modal --}}
+<x-modals.log-violation :violations="$violations" />
 @vite(['resources/js/violations-search.js'])
 @endsection
