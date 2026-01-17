@@ -158,5 +158,4 @@
 
 {{-- Log Violation Modal --}}
 <x-modals.log-violation :violations="$violations" />
-@vite(['resources/js/violations-search.js'])
 @endsection

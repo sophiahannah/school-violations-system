@@ -1,6 +1,8 @@
 import "./bootstrap";
+import "./appeal-search";
+import "./violations-search";
 
-{/* Password eye button */}
+/* Password eye button */
 document.addEventListener("DOMContentLoaded", () => {
     const togglePassword = document.querySelector("#togglePassword");
     const password = document.querySelector("#password");

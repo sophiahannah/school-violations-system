@@ -8,7 +8,7 @@
     <title>Admin Dashboard</title>
     <link rel="icon" type="image/png" href="{{ asset('PUPLogo 1 Login.png') }}">
 
-    @vite(entrypoints: ['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 </head>
 
