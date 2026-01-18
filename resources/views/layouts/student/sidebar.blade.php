@@ -23,12 +23,11 @@
                 <span>Home</span>
             </a>
 
-            <!-- 
-            <a href="{{ route('admin.violations-management.index') }}"
-                class="text-white d-flex align-items-center py-3 px-4 {{ request()->routeIs('admin.violations-management.index') ? 'active' : '' }}">
-                <i class="bi bi-file-earmark-text-fill me-3 fs-5"></i>
+            <a href="{{ route('student.handbook.index') }}"
+                class="text-white d-flex align-items-center py-3 px-4 {{ request()->routeIs('student.handbook.index') ? 'active' : '' }}">
+                <i class="bi bi-book-fill me-3 fs-5"></i>
                 <span>Handbook</span>
-            </a> -->
+            </a>
 
             <a href="{{ route('student.faqs.index') }}"
                 class="text-white d-flex align-items-center py-3 px-4 {{ request()->routeIs('student.faqs.index') ? 'active' : '' }}">

@@ -116,3 +116,49 @@ select:focus,
     border-color: map-get($map: $custom-colors, $key: "red");
     color: #ffffff;
 }
+
+// Student Handbook Styles
+.violation-item {
+    border: 1px solid #d46666 !important;
+    border-radius: 0.375rem !important;
+    overflow: hidden;
+
+    .card-header {
+        border-bottom: none;
+    }
+}
+
+.violation-toggle {
+    background-color: white !important;
+    color: #800000;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+
+    &:hover {
+        background-color: #f8f9fa !important;
+    }
+
+    &:focus,
+    &:active {
+        box-shadow: none !important;
+    }
+
+    &:not(.collapsed) {
+        background-color: #f6e7e7 !important;
+
+        .chevron-icon {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+.violation-title {
+    color: #800000;
+    font-size: 0.95rem;
+}
+
+.chevron-icon {
+    transition: transform 0.3s ease;
+    font-size: 1.1rem;
+    color: #800000;
+}

@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Student\AppealController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\Student\FaqController;
+use App\Http\Controllers\Student\HandbookController;
 use App\Http\Controllers\Student\ViolationOverviewController;
 use App\Mail\ViolationRecordedMail;
 use App\Models\ViolationRecord;
@@ -67,6 +68,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         // FAQs Page
         Route::get('/faqs', [FaqController::class, 'index'])->name('student.faqs.index');
+
+        // Handbook Page
+        Route::get('/handbook', [HandbookController::class, 'index'])->name('student.handbook.index');
     });
 
     // Logout user
