@@ -97,23 +97,25 @@
                                 <x-status-badge :status="$record->status->status_name" />
                             </td>
 
-                            <td class="text-center text-nowrap">
-                                <button class="border-0 bg-transparent p-2 me-1" data-bs-toggle="modal"
-                                    data-bs-target="#editViolationModal-{{ $record->id }}"
-                                    onclick="event.stopPropagation()" title="Edit violation"
-                                    style="cursor: pointer; transition: all 0.3s ease; border-radius: 0.5rem;"
-                                    onmouseover="this.style.backgroundColor='rgba(13, 110, 253, 0.1)'; this.style.transform='translateY(-2px)'"
-                                    onmouseout="this.style.backgroundColor='transparent'; this.style.transform='translateY(0)'">
-                                    <i class="bi bi-pencil-square" style="font-size: 1.1rem; color: #0c0429;"></i>
-                                </button>
-                                <button class="border-0 bg-transparent p-2 ms-1 me-1" data-bs-toggle="modal"
-                                    data-bs-target="#deleteViolationModal-{{ $record->id }}"
-                                    onclick="event.stopPropagation()" title="Delete violation"
-                                    style="cursor: pointer; transition: all 0.3s ease; border-radius: 0.5rem;"
-                                    onmouseover="this.style.backgroundColor='rgba(220, 53, 69, 0.1)'; this.style.transform='translateY(-2px)'"
-                                    onmouseout="this.style.backgroundColor='transparent'; this.style.transform='translateY(0)'">
-                                    <i class="bi bi-trash" style="font-size: 1.1rem; color: #dc3545;"></i>
-                                </button>
+                            <td class="text-center text-nowrap" onclick="event.stopPropagation()">
+                                <div class="btn-group justify-content-end d-flex" role="group" aria-label="Violation actions">
+                                    @if ($record->status_id === 2)
+                                    <button type="button" class="btn btn-sm btn-outline-primary action-resolve-btn"
+                                        title="Mark as resolved">
+                                        <i class="bi bi-check2-square"></i>
+                                    </button>
+                                    @endif
+
+                                    <button type="button" class="btn btn-sm btn-outline-primary action-edit-btn" title="Edit violation"
+                                        data-bs-toggle="modal" data-bs-target="#editViolationModal-{{ $record->id }}">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-sm btn-outline-primary action-delete-btn" title="Delete violation"
+                                        data-bs-toggle="modal" data-bs-target="#deleteViolationModal-{{ $record->id }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         @empty

@@ -36,14 +36,26 @@
                     data-bs-target="#viewViolationModal-{{ $record->id }}">
                     <i class="bi bi-eye me-1"></i> View
                 </button>
-                <button type="button" class="btn btn-sm " data-bs-toggle="modal"
-                    data-bs-target="#editViolationModal-{{ $record->id }}" title="Edit violation">
-                    <i class="bi bi-pencil-square"></i>
-                </button>
-                <button type="button" class="btn btn-sm text-red" data-bs-toggle="modal"
-                    data-bs-target="#deleteViolationModal-{{ $record->id }}" title="Delete violation">
-                    <i class="bi bi-trash"></i>
-                </button>
+
+                <div class="btn-group justify-content-end d-flex" role="group" aria-label="Violation actions">
+                    @if ($record->status_id === 2)
+                    <button type="button" class="btn btn-sm btn-outline-primary action-resolve-btn"
+                        title="Mark as resolved">
+                        <i class="bi bi-check2-square"></i>
+                    </button>
+                    @endif
+
+                    <button type="button" class="btn btn-sm btn-outline-primary action-edit-btn" title="Edit violation"
+                        data-bs-toggle="modal" data-bs-target="#editViolationModal-{{ $record->id }}">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-sm btn-outline-primary action-delete-btn"
+                        title="Delete violation" data-bs-toggle="modal"
+                        data-bs-target="#deleteViolationModal-{{ $record->id }}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

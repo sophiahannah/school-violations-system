@@ -7,7 +7,9 @@ $custom-colors: (
     "red": #9a2a2a,
     "red-shade": #ffd7d7,
     "yellow-shade": #fff1c9,
+    "blue": #0d6efd,
     "blue-shade": #e6f7f9,
+    "green": #198754,
     "green-shade": #e8f5e9,
 );
 
@@ -94,4 +96,23 @@ select:focus,
     .menu-label {
         font-size: 0.7rem;
     }
+}
+
+// Action buttons
+.action-resolve-btn:hover {
+    background-color: map-get($map: $custom-colors, $key: "green");
+    border-color: map-get($map: $custom-colors, $key: "green");
+    color: #ffffff;
+}
+
+.action-edit-btn:hover {
+    background-color: map-get($map: $custom-colors, $key: "blue");
+    border-color: map-get($map: $custom-colors, $key: "blue");
+    color: #ffffff;
+}
+
+.action-delete-btn:hover {
+    background-color: map-get($map: $custom-colors, $key: "red");
+    border-color: map-get($map: $custom-colors, $key: "red");
+    color: #ffffff;
 }
