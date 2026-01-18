@@ -158,4 +158,9 @@
 
 {{-- Log Violation Modal --}}
 <x-modals.log-violation :violations="$violations" />
+
+{{-- Reponse Modal --}}
+@if(session('response') == 1)
+    <x-modals.response-modal />
+@endif
 @endsection

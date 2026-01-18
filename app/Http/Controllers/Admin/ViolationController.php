@@ -60,7 +60,7 @@ class ViolationController extends Controller
                 'under_reviewCount',
                 'pendingCount',
                 'resolvedCount',
-                'statuses'
+                'statuses',
             )
         );
     }
@@ -97,7 +97,9 @@ class ViolationController extends Controller
         // Mail::to($violationRecord->user->email)
         //     ->send(new ViolationRecordedMail($violationRecord));
 
-        return redirect()->route('admin.violations-management.index');
+        // Redirects page to admin.violations-management.index with response = 1 in session data.
+        // This is what enable response-modal blade file to render
+        return redirect()->route('admin.violations-management.index')->with('response', 1);   
     }
 
     private function getUserId($student_id)
@@ -186,7 +188,7 @@ class ViolationController extends Controller
 
         // If the current record's violation_id and newly-entered violation_id are the same, do nothing.
         if (strcmp($violation_id, $prev_violation_id) == 0) {
-            return redirect()->route('admin.violations-management.index');
+            return redirect()->route('admin.violations-management.index')->with('response', 1);
         }
 
         // If the current record's violation_id and newly-entered violation_id are different
@@ -203,7 +205,7 @@ class ViolationController extends Controller
             return 'Error: Action failed';
         }
 
-        return redirect()->route('admin.violations-management.index');
+        return redirect()->route('admin.violations-management.index')->with('response', 1);
     }
 
     /**
@@ -211,8 +213,8 @@ class ViolationController extends Controller
      */
     public function destroy(ViolationRecord $violations_management)
     {
-        $violations_management->delete();
+        $result = $violations_management->delete();
 
-        return redirect()->route('admin.violations-management.index');
+        return redirect()->route('admin.violations-management.index')->with('response', 1);
     }
 }
