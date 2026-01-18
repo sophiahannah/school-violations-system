@@ -67,10 +67,4 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Logout user
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-    Route::get('/test-email/{id}', function ($id) {
-        $record = ViolationRecord::findOrFail($id);
-
-        return new ViolationRecordedMail($record);
-    })->middleware('auth');
 });
