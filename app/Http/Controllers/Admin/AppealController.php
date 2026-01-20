@@ -30,7 +30,7 @@ class AppealController extends Controller
             })->orWhere('id', 'like', "%{$search}%"); // Search by case ID
         }
 
-        $appeals = $query->orderBy('created_at', 'desc')->paginate(10);
+        $appeals = $query->latest()->paginate(10);
 
         // Calculate summary based on is_accepted column
         $summary = [

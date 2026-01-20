@@ -104,7 +104,7 @@
                 style="padding: 40px; overflow: hidden;">
 
                 <!-- Background -->
-                <div class="position-absolute top-0 start-0 w-100 h-100" style="background: url('/PUP_pic_2.jpg') center/cover; opacity: 0.6; z-index: 1;"></div>
+                <div class="position-absolute top-0 start-0 w-100 h-100" style="background: url('{{ asset('Pup_pic_2.jpg') }}') center/cover; opacity: 0.6; z-index: 1;"></div>
                 <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(139, 0, 0, 0.55); z-index: 2;"></div>
 
                 <div class="position-relative d-flex flex-column justify-content-center flex-grow-1" style="z-index: 3;">
