@@ -43,14 +43,25 @@
 
                     <hr>
 
-                    <!-- Section: Timeline -->
+                    {{-- Appeal Summary if there is appeal --}}
+                    @if($record->appeal)
+                    <div class="p-2">
+                        <h6 class="fw-bold mb-2">Appeal Summary</h6>
+                        <p class="small mb-1">{{ $record->appeal->appeal_content }}</p>
+
+                    </div>
+                    <hr>
+                    @endif
+
+                    <!-- Timeline -->
                     <section class="p-2">
-                        <h6 class="fw-bold mb-3">Timeline</h6>
-                        <ul class="timeline">
+                        <h4 class="fw-bold mb-3">Record Timeline</h4>
+                        <ul class="timeline ms-4">
                             @foreach($timeline as $event)
                             <li class="timeline-item mb-5">
                                 <div class="">
-                                    <div class="d-flex flex-wrap align-items-center gap-2">
+                                    <div
+                                        class="d-flex flex-wrap align-items-center gap-2 {{ $loop->iteration === 1 ? 'text-primary fs-5' : '' }}">
                                         <span class="fw-bold">{{ $event['title'] }}</span>
                                     </div>
                                     <small class="text-muted">
@@ -62,24 +73,6 @@
                             @endforeach
                         </ul>
                     </section>
-
-
-
-                    @if($record->appeal)
-                    <hr>
-                    <h6 class="fw-bold mb-2">Appeal Summary</h6>
-                    <p class="small mb-1">{{ $record->appeal->appeal_content }}</p>
-                    <p class="small text-muted mb-0">
-                        Status:
-                        @if(is_null($record->appeal->is_accepted))
-                        Under review
-                        @elseif($record->appeal->is_accepted)
-                        Accepted
-                        @else
-                        Denied
-                        @endif
-                    </p>
-                    @endif
                 </div>
             </div>
         </div>
