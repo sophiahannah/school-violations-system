@@ -7,10 +7,20 @@ use App\Mail\AppealAcceptedMail;
 use App\Mail\AppealDeniedMail;
 use App\Models\Appeal;
 use App\Models\Status;
+use App\Models\ViolationRecord;
+use App\Models\ViolationSanction;
+use App\Services\UtilitiesService;
 use Illuminate\Support\Facades\Mail;
 
 class AppealController extends Controller
 {
+    protected $utilitiesService;
+
+    public function __construct(UtilitiesService $utilitiesService)
+    {
+        $this->utilitiesService = $utilitiesService;
+    }
+
     /* Display a list of all appeals */
     public function index()
     {
@@ -62,11 +72,14 @@ class AppealController extends Controller
             'status_id' => 4, // Set status to 'Dismissed'
         ]);
 
+        // $violationRecord -> delete();
+
         // Send email notification
         // $this->sendAppealMail($appeal, new AppealAcceptedMail($appeal));
 
+        $this->utilitiesService->updateViolations($appeal->violation_record_id);
+        
         session()->flash('response', 'Appeal has been accepted, and the student has been notified.');
-
         return redirect()->route('admin.appeals.index');
     }
 
@@ -87,7 +100,7 @@ class AppealController extends Controller
         $violationRecordRelation = $appeal->violationRecord();
 
         $violationRecordRelation->update([
-            'status_id' => 2, // Set status to 'In progress'
+            'status_id' => 2, // Set status to 'In progress'   
         ]);
 
         // Send email notification
