@@ -13,6 +13,6 @@ class AppealSeeder extends Seeder
      */
     public function run(): void
     {
-        // Appeal::factory()->count(20)->create();
+        Appeal::factory()->count(20)->create();
     }
 }

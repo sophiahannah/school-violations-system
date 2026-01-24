@@ -9,17 +9,17 @@ use App\Models\User;
 use App\Models\Violation;
 use App\Models\ViolationRecord;
 use App\Models\ViolationSanction;
-use App\Services\ViolationService;
+use App\Services\UtilitiesService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ViolationController extends Controller
 {
-    protected $violationService;
+    protected $utilitiesService;
 
-    public function __construct(ViolationService $violationService)
+    public function __construct(UtilitiesService $utilitiesService)
     {
-        $this->violationService = $violationService;
+        $this->utilitiesService = $utilitiesService;
     }
 
     /**
@@ -86,10 +86,10 @@ class ViolationController extends Controller
         $user_id = User::where('role_id', 1)->where('school_id', $student_id)->value('id');
 
         // Get Next Offense Count
-        $violation_count = $this->violationService->countViolationOfStudent($user_id, $violation_id);
+        $violation_count = $this->utilitiesService->countViolationOfStudent($user_id, $violation_id);
 
         // Get Violation-Sanction
-        $vio_sanct_id = $this->violationService->determineViolationSanction($violation_id, $violation_count);
+        $vio_sanct_id = $this->utilitiesService->determineViolationSanction($violation_id, $violation_count);
 
         // Insert
         $record = ViolationRecord::create([
@@ -134,8 +134,8 @@ class ViolationController extends Controller
         }
 
         // If the current record's violation_id and newly-entered violation_id are different
-        $violation_count = $this->violationService->countViolationOfStudent($user_id, $violation_id);
-        $vio_sanct_id = $this->violationService->determineViolationSanction($violation_id, $violation_count);
+        $violation_count = $this->utilitiesService->countViolationOfStudent($user_id, $violation_id);
+        $vio_sanct_id = $this->utilitiesService->determineViolationSanction($violation_id, $violation_count);
 
         $result = $violations_management->update([
             'vio_sanct_id' => $vio_sanct_id,
@@ -157,6 +157,9 @@ class ViolationController extends Controller
      */
     public function destroy(ViolationRecord $violations_management)
     {
+
+        $return = $this->utilitiesService->updateViolations($violations_management->id);
+
         $result = $violations_management->delete();
 
         session()->flash('response', 'Violation record deleted.');

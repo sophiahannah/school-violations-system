@@ -15,7 +15,6 @@ class DashboardController extends Controller
         $user = Auth::user();
         $violationRecords = $user->violationRecords()
             ->with(['status', 'violationSanction.violation', 'violationSanction.sanction', 'appeal'])
-            ->withTrashed() // Lets students see soft-deleted records
             ->latest();
             
         $violationCount = $violationRecords->count();
