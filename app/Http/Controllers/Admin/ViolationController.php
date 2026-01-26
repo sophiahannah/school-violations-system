@@ -119,33 +119,26 @@ class ViolationController extends Controller
 
         $violation_id = request('violation_id');
 
-        if ($violation_id == null) {
-            return 'Error:  Violation cannot be null.';
-        }
-
         $user_id = $violations_management->user->id;
         $prev_vio_sanct_id = $violations_management->vio_sanct_id;
         $prev_violation_id = ViolationSanction::where('id', $prev_vio_sanct_id)->get('violation_id')->first()->violation_id;
 
         // If the current record's violation_id and newly-entered violation_id are the same, do nothing.
         if (strcmp($violation_id, $prev_violation_id) == 0) {
-            session()->flash('response', 'Violation record updated.');
+            session()->flash('response', 'Violation has not been changed.');
             return redirect()->route('admin.violations-management.index');
         }
 
         // If the current record's violation_id and newly-entered violation_id are different
         $violation_count = $this->utilitiesService->countViolationOfStudent($user_id, $violation_id);
         $vio_sanct_id = $this->utilitiesService->determineViolationSanction($violation_id, $violation_count);
+        $this->utilitiesService->updateViolations($violations_management);
 
-        $result = $violations_management->update([
+        $violations_management->update([
             'vio_sanct_id' => $vio_sanct_id,
             'status_id' => 1,
             'updated_at' => Carbon::now(),
         ]);
-
-        if ($result == 0) {
-            return 'Error: Action failed';
-        }
 
         session()->flash('response', 'Violation record updated.');
 
@@ -157,10 +150,9 @@ class ViolationController extends Controller
      */
     public function destroy(ViolationRecord $violations_management)
     {
+        $this->utilitiesService->updateViolations($violations_management);
 
-        $return = $this->utilitiesService->updateViolations($violations_management->id);
-
-        $result = $violations_management->delete();
+        $violations_management->delete();
 
         session()->flash('response', 'Violation record deleted.');
 

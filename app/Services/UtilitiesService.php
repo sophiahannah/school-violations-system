@@ -6,63 +6,51 @@ use App\Models\ViolationRecord;
 use App\Models\ViolationSanction;
 use Illuminate\Support\Facades\Mail;
 
-class UtilitiesService {
+class UtilitiesService
+{
 
     /**
      * After an update to a student's records (UPDATE/DELETE), update their records to the correct number of offense.
      */
-    public function updateViolations($violationRecordId) {
-        // Needed to obtain the violation record, which is needed to get the user's id.
-        $violation_record =  ViolationRecord::findOrFail($violationRecordId);
-        $user_id = $violation_record -> user_id;
-        
-        // Needed to get the violation_id, which is needed for the conditional in the loop to get only those records who correspond to a certain type of violation.
-        $vio_sanct_id = $violation_record -> vio_sanct_id;
-        $violation_sanction = ViolationSanction::findOrFail($vio_sanct_id);
-        $violation_id = $violation_sanction -> violation_id;
+    public function updateViolations($record)
+    {
+        $user_id = $record->user_id;
+        $violation_id = $record->violationSanction->violation_id;
 
-        // Is a list of the student's violations.
-        $user_violations = ViolationRecord::where('user_id', $user_id)
-                                            ->where('id', '<>', $violationRecordId)
-                                            ->where('status_id', '<>', 4)
-                                            ->orderBy('id', 'desc')
-                                            ->get();
-        $count_of_violations = ViolationRecord::join('violation_sanctions', 'violation_records.vio_sanct_id', 'violation_sanctions.id')
-                                                ->where('violation_sanctions.violation_id', $violation_id)
-                                                ->where('violation_records.id', '<>', $violationRecordId)
-                                                ->where('status_id', '<>', 4)
-                                                ->count();
+        // Fetch all violations of this violation except the current record
+        $violations = ViolationRecord::where('user_id', $user_id)
+            ->where('id', '<>', $record->id)
+            ->where('status_id', '<>', 4)
+            ->whereHas('violationSanction', function ($q) use ($violation_id) {
+                $q->where('violation_id', $violation_id);
+            })
+            ->orderBy('created_at', 'asc')
+            ->with('violationSanction')
+            ->get();
 
-        $array = [];
+        $offense_number = 1;
+        foreach ($violations as $violation) {
+            // Get new sanction based on offense number
+            $new_vio_sanct_id = $this->determineViolationSanction($violation_id, $offense_number);
 
-        foreach($user_violations as $user_violation) {  
-            $vio_sanct_id = $user_violation -> vio_sanct_id;
-            $violation_sanction = ViolationSanction::findOrFail($vio_sanct_id);
-
-            // Filters records so that only records with corresponding violation_id are added to the array;
-            if ($violation_sanction->violation_id == $violation_id) {
-                $no_of_offense = $count_of_violations;
-
-                $new_vio_sanct_id = $this->determineViolationSanction($violation_id, $no_of_offense);
-
-                $user_violation->update([
+            // Only update if different
+            if ($violation->vio_sanct_id !== $new_vio_sanct_id) {
+                $violation->update([
                     'vio_sanct_id' => $new_vio_sanct_id,
                 ]);
-
-                $array[] = $user_violation;
             }
 
-            $count_of_violations--;
+            $offense_number++;
         }
-
-        return $array;
     }
 
-     /**
+
+    /**
      * Determine the violation_sanction_id
      */
 
-    public function determineViolationSanction($violation_id, $violation_count) {
+    public function determineViolationSanction($violation_id, $violation_count)
+    {
         $vio_sanct_id = ViolationSanction::where('violation_id', $violation_id)
             ->where('no_of_offense', $violation_count)
             ->get('id')
@@ -90,10 +78,9 @@ class UtilitiesService {
             ->where('violation_sanctions.violation_id', $violation_id)
             ->where('status_id', '<>', 4)
             ->latest('no_of_offense')
-            ->get()
-            ->first();
+            ->get();
 
-        return $record->no_of_offense ?? 0;
+        return  $record->count() ?? 0;
     }
 
     /**
@@ -129,5 +116,4 @@ class UtilitiesService {
 
         return $violation_count;
     }
-
 }
