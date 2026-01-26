@@ -16,7 +16,7 @@ class DashboardController extends Controller
         $violationRecords = $user->violationRecords()
             ->with(['status', 'violationSanction.violation', 'violationSanction.sanction', 'appeal'])
             ->latest();
-            
+
         $violationCount = $violationRecords->count();
 
         $statuses = Status::all();

@@ -22,6 +22,7 @@
                         </label>
 
                         <select id="violation_type" name="violation_id" class="form-select">
+                            <option selected disabled>Select Violation Type</option>
                             @foreach ($violations as $violation)
                             <option value="{{ $violation->id }}">
                                 {{ $violation->violation_name }}
